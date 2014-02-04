@@ -224,6 +224,7 @@ class CmdStart(ClusterCompleter):
                 raise
             else:
                 raise exception.CancelledStartRequest(tag)
+        """
         try:
             #storing startup information in dynamodb
             log.info("Storing configuration for cloning.")
@@ -232,7 +233,7 @@ class CmdStart(ClusterCompleter):
                 template_name=self.opts.cluster_template, zone=scluster.zone)
         except:
             log.exception(("Error attempting to store cluster settings.  This"
-                " cluster will not be cloneable."))
+                " cluster will not be cloneable."))"""
         if validate_only:
             return
         if not create_only and not self.opts.login_master:
