@@ -72,6 +72,8 @@ FLASK_TEMPLATE_DIR = '.local/lib/python2.7/site-packages/tcdiracweb-0.1.0-py2.7.
 STARCLUSTER_CFG_DIR = os.path.join(os.path.expanduser('~'), '.starcluster')
 STARCLUSTER_CFG_FILE = os.path.join(STARCLUSTER_CFG_DIR, 'config')
 STARCLUSTER_PLUGIN_DIR = os.path.join(STARCLUSTER_CFG_DIR, 'plugins')
+
+STARCLUSTER_PLUGIN_DIR = os.path.expanduser('~/starcluster-plugins')
 #STARCLUSTER_LOG_DIR = os.path.join(STARCLUSTER_CFG_DIR, 'logs')
 STARCLUSTER_LOG_DIR = os.path.join(os.path.expanduser('~'), FLASK_TEMPLATE_DIR, 'sc-log')
 STARCLUSTER_RECEIPT_DIR = "/var/run/starcluster"
