@@ -55,7 +55,7 @@ def create_sc_config_dirs():
     __makedirs(STARCLUSTER_LOG_DIR)
 
 
-VERSION = "0.9999"
+VERSION = "0.95.3"
 PID = os.getpid()
 TMP_DIR = tempfile.gettempdir()
 if os.path.exists("/tmp"):
@@ -86,9 +86,9 @@ AWS_DEBUG_FILE = os.path.join(STARCLUSTER_LOG_DIR, 'aws-debug.log')
 CRASH_FILE = os.path.join(STARCLUSTER_LOG_DIR, 'crash-report-%d.txt' % PID)
 
 # StarCluster BASE AMIs (us-east-1)
-BASE_AMI_32 = "ami-7c5c3915"
-BASE_AMI_64 = "ami-765b3e1f"
-BASE_AMI_HVM = "ami-52a0c53b"
+BASE_AMI_32 = "ami-9bf9c9f2"
+BASE_AMI_64 = "ami-3393a45a"
+BASE_AMI_HVM = "ami-6b211202"
 
 SECURITY_GROUP_PREFIX = "@sc-"
 SECURITY_GROUP_TEMPLATE = SECURITY_GROUP_PREFIX + "%s"
@@ -99,6 +99,7 @@ VOLUME_GROUP = SECURITY_GROUP_PREFIX + VOLUME_GROUP_NAME
 VERSION_TAG = SECURITY_GROUP_PREFIX + 'version'
 CORE_TAG = SECURITY_GROUP_PREFIX + 'core'
 USER_TAG = SECURITY_GROUP_PREFIX + 'user'
+MAX_TAG_LEN = 255
 
 # Internal StarCluster userdata filenames
 UD_PLUGINS_FNAME = "_sc_plugins.txt"
@@ -276,8 +277,8 @@ CLUSTER_SETTINGS = {
     'cluster_size': (int, True, None, None, None),
     'cluster_user': (str, False, 'sgeadmin', None, None),
     'cluster_shell': (str, False, 'bash', AVAILABLE_SHELLS.keys(), None),
-    'vpc_id': (str, False, None, None, None),
     'subnet_id': (str, False, None, None, None),
+    'public_ips': (bool, False, None, None, None),
     'master_image_id': (str, False, None, None, None),
     'master_instance_type': (str, False, None, INSTANCE_TYPES.keys(), None),
     'node_image_id': (str, True, None, None, None),
