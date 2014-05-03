@@ -1539,6 +1539,7 @@ class Cluster(object):
         """
         interval = self.refresh_interval
         log.info("%s %s" % (msg, "(updating every %ds)" % interval))
+        time.sleep( interval )
         try:
             self.wait_for_active_spots()
             self.wait_for_running_instances()
