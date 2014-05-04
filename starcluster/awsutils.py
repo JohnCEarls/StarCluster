@@ -93,8 +93,10 @@ class EasyAWS(object):
             sc = self._get_local_credentials()
             ctr = 0
             while sc is None and ctr < 3: #give 3 tries, incase cred timeout
-                sc = self._get_local_credentials()
+                log.info("Attempt to get credentials failed.  Trying again")
                 ctr += 1
+                time.sleep(ctr *5 )
+                sc = self._get_local_credentials()
             if sc is None:
                 raise Exception("Unable to find local security credentials")
             #use current instance's security credentials
@@ -110,6 +112,7 @@ class EasyAWS(object):
         """
         md = boto.utils.get_instance_metadata()
         sc_dict = md['iam']['security-credentials']
+        print sc_dict
         sc = None
         for k,v in sc_dict.iteritems():
             if v and 'AccessKeyId' in v:
