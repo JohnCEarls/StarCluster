@@ -58,8 +58,8 @@ class EasyAWS(object):
 
         kwargs are passed to the connection_authenticator's constructor
         """
-        self.aws_access_key_id = aws_access_key_id
-        self.aws_secret_access_key = aws_secret_access_key
+        self.aws_access_key_id = None # aws_access_key_id
+        self.aws_secret_access_key = None # aws_secret_access_key
         self.connection_authenticator = connection_authenticator
         self._conn = None
         self._kwargs = kwargs
@@ -90,34 +90,11 @@ class EasyAWS(object):
             boto_config.setbool('Boto', 'https_validate_certificates',
                                 validate_certs)
             
-            sc = self._get_local_credentials()
-            ctr = 0
-            while sc is None and ctr < 3: #give 3 tries, incase cred timeout
-                log.info("Attempt to get credentials failed.  Trying again")
-                ctr += 1
-                time.sleep(ctr *5 )
-                sc = self._get_local_credentials()
-            if sc is None:
-                raise Exception("Unable to find local security credentials")
-            #use current instance's security credentials
-            self._conn = self.connection_authenticator(sc['AccessKeyId'], 
-                    sc['SecretAccessKey'], security_token=sc['Token'], 
+            self._conn = self.connection_authenticator( self.aws_access_key_id,
+                    self.aws_secret_access_key,
                     **self._kwargs)
             self._conn.https_validate_certificates = validate_certs
         return self._conn
-
-    def _get_local_credentials(self):
-        """
-        Returns the local security credentials
-        """
-        md = boto.utils.get_instance_metadata()
-        sc_dict = md['iam']['security-credentials']
-        print sc_dict
-        sc = None
-        for k,v in sc_dict.iteritems():
-            if v and 'AccessKeyId' in v:
-                sc = v
-        return sc
 
 class EasyEC2(EasyAWS):
     def __init__(self, aws_access_key_id, aws_secret_access_key,
