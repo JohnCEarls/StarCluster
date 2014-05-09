@@ -52,6 +52,7 @@ Bug Fixes
 * cluster: fix VPC public IPs validation
 
 .. _version-0.95.2:
+Test autopush
 
 0.95.2
 ======
